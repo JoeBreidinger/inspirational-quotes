@@ -24,10 +24,13 @@ const AUTHORS = [
 // === State ===
 /** @returns {Quote} a quote with a random sentence and random author */
 function makeQuote() {
-  // TODO
+  const randomQuote = Math.floor(Math.random() * SENTENCES.length);
+  const randomAuthor = Math.floor(Math.random() * AUTHORS.length);
+  return { sentence: SENTENCES[randomQuote], author: AUTHORS[randomAuthor] };
 }
-
-const quotes = undefined; // TODO
+console.log(makeQuote());
+const quotes = Array.from({ length: NUM_QUOTES }, makeQuote);
+console.log(quotes);
 
 // === Components ===
 /**
@@ -35,12 +38,21 @@ const quotes = undefined; // TODO
  * @param {Quote} quote
  */
 function QuoteCard(quote) {
-  // TODO
+  const { author, sentence } = quote;
+  const $card = document.createElement("figure");
+  $card.classList.add("quote");
+  $card.innerHTML = `<blockquote>${sentence}</blockquote><blockquote>${author}</blockquote>`;
+  return $card;
 }
+console.log(QuoteCard(quotes[0]));
 
 /** An article of many QuoteCards */
 function QuoteCards() {
-  // TODO
+  const $cards = document.createElement("article");
+  $cards.classList.add("quotes");
+  const $quotes = quotes.map(QuoteCard);
+  $cards.replaceChildren(...$quotes);
+  return $cards;
 }
 
 // === Render ===
